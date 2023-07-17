@@ -4,22 +4,29 @@
 {% block content %}
 <div>
     <div>
-        <div>
-            <h3>Edit list:</h3>
-            <h5>{{ todo_list.title | upper }}</h5>
-        </div>
-        <ul>
-            {% for todo in object_list %}
-            <li>
-                <div>
-                    <div
+        <h3>Edit list:</h3>
+        <h5>{{ todo_list.title | upper }}</h5>
+    </div>
+    <ul>
+        {% for todo in object_list %}
+        <li>
+            <div>
+                <div
                         role="button"
                         onclick="location.href='{% url "item-update" todo_list.id todo.id %}'">
-                        {{ todo.title }}
-                        (Due {{ todo.due_date | date:"l, F j"}})
-                    </div>
-                </div>
-            </li>
+
+
+
+                {%if todo.is_completed == True %}
+                    <strike>{{ todo.title }}(Due {{ todo.due_date | date:"l, F j"}})</strike>
+                {% else %}
+                    {{ todo.title }} (Due {{ todo.due_date | date:"l, F j"}})
+                {% endif %}
+
+            </div>
+
+
+        </li>
             {% empty %}
             <p>There are no to-do items in this list.</p>
             {% endfor %}

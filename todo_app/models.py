@@ -27,6 +27,7 @@ class ToDoItem(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     due_date = models.DateTimeField(default=one_week_hence)
     todo_list = models.ForeignKey(ToDoList, on_delete=models.CASCADE)
+    is_completed = models.BooleanField(default=False)
 
     def get_absolute_url(self):
         return reverse(
