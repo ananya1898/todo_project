@@ -12,7 +12,7 @@ urlpatterns = [
     # url to edit an existing item
     path("list/<int:list_id>/item/<int:pk>/", views.ItemUpdate.as_view(), name="item-update"),
     path("list/<int:pk>/delete/", views.ListDelete.as_view(), name="list-delete"),
-    path("list/<int:list_id>/item/<int:pk>/delete/",views.ItemDelete.as_view(),name="item-delete",
+    path("list/<int:list_id>/item/<int:pk>/delete/", views.ItemDelete.as_view(), name="item-delete",
     )
 
 ]

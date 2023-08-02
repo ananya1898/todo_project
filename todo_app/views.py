@@ -2,6 +2,9 @@
 from django.urls import reverse, reverse_lazy
 from django.views.generic import (ListView, CreateView, UpdateView, DeleteView)
 from .models import ToDoList, ToDoItem
+from django.conf import settings
+from django.core.mail import send_mail
+from django.utils import timezone
 
 
 # Implementation for viewing lists and items corresponding to that list
@@ -99,3 +102,25 @@ class ItemDelete(DeleteView):
         context = super().get_context_data(**kwargs)
         context["todo_list"] = self.object.todo_list
         return context
+
+
+# Email Sending
+'''class SendEmail:
+    model = ToDoItem
+
+    def send_overdue_task_email(self):
+        subject = 'Test'
+        message = 'Test'
+        from_email = settings.EMAIL_HOST_USER
+        recipient_list = ['ananyadps18@gmail.com']
+
+        send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+
+
+    def check_overdue_tasks(self):
+        overdue_tasks = ToDoItem.objects.filter(due_date = timezone.now().date(), is_completed=False)
+
+        for tasks in overdue_tasks:
+            self.send_overdue_task_email()
+
+'''
