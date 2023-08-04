@@ -18,7 +18,7 @@
 
 
                 {%if todo.is_completed == True %}
-                    <strike>{{ todo.title }}(Due {{ todo.due_date | date:"l, F j"}})</strike>
+                    <strike>{{ todo.title }}(Due {{ todo.due_date | date:"l, F j"}}) (Completed On {{ todo.completion_date | date:"l, F j"}}) </strike>
                 {% else %}
                     {{ todo.title }} (Due {{ todo.due_date | date:"l, F j"}})
                 {% endif %}

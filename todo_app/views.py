@@ -104,23 +104,24 @@ class ItemDelete(DeleteView):
         return context
 
 
-# Email Sending
-'''class SendEmail:
-    model = ToDoItem
+# OverDueTask Email
 
-    def send_overdue_task_email(self):
-        subject = 'Test'
-        message = 'Test'
+class SendEmail:
+
+    @classmethod
+    def send_email(self, task_title, task_due_date):
+        subject = 'Reminder To Complete Your Task'
+        message = 'Hello,\n\nYou have not completed your task ' + task_title + ' yet.\nThe due date for the same was ' + str(task_due_date.date()) + '.\n' +'Please complete it as soon as possible.\nIf you wish to change the due date go to xyz.\n\n' + 'Thanks\n'
         from_email = settings.EMAIL_HOST_USER
         recipient_list = ['ananyadps18@gmail.com']
-
         send_mail(subject, message, from_email, recipient_list, fail_silently=False)
 
+    @classmethod
+    def identify_overdue_tasks_and_send_email(self):
+        all_tasks = ToDoItem.objects.all()
+        for task in all_tasks:
+            if not task.is_completed and task.due_date.date() == timezone.now().date():
+                self.send_email(task.title, task.due_date)
 
-    def check_overdue_tasks(self):
-        overdue_tasks = ToDoItem.objects.filter(due_date = timezone.now().date(), is_completed=False)
 
-        for tasks in overdue_tasks:
-            self.send_overdue_task_email()
-
-'''
+SendEmail.identify_overdue_tasks_and_send_email()
