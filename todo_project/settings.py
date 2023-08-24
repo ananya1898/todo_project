@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # custom
     'todo_app',
-    'background_task'
+    'background_task',
+    'crispy_forms',
+    'crispy_bootstrap4'
 ]
 
 MIDDLEWARE = [
@@ -128,3 +130,5 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'ananya.agr18@gmail.com'
 EMAIL_HOST_PASSWORD = 'tptfdparysjcllhz'
 
+#AUTH_USER_MODEL= 'todo_app.User'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

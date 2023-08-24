@@ -2,6 +2,8 @@
 from django.utils import timezone
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
+from django.conf import settings
 
 
 def one_week_hence():
@@ -9,6 +11,7 @@ def one_week_hence():
 
 
 class ToDoList(models.Model):
+    username = models.CharField(max_length=100)
     title = models.CharField(max_length=100, unique=True)
 
     def get_absolute_url(self):
@@ -47,5 +50,3 @@ class ToDoItem(models.Model):
 
     class Meta:
         ordering = ["due_date"]
-
-

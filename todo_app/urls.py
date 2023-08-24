@@ -3,6 +3,11 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    # register new user
+    path("register", views.User.register_request, name="register"),
+    #  login as a registered user
+    path("login", views.User.login_request, name="login"),
+    # view user specific lists
     path("", views.ListListView.as_view(), name="index"),
     path("list/<int:list_id>/", views.ItemListView.as_view(), name="list"),
     # url to add new list

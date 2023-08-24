@@ -15,8 +15,6 @@
                         role="button"
                         onclick="location.href='{% url "item-update" todo_list.id todo.id %}'">
 
-
-
                 {%if todo.is_completed == True %}
                     <strike>{{ todo.title }}(Due {{ todo.due_date | date:"l, F j"}}) (Completed On {{ todo.completion_date | date:"l, F j"}}) </strike>
                 {% else %}
