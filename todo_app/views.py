@@ -7,10 +7,10 @@ from django.core.mail import send_mail
 from django.utils import timezone
 from django.shortcuts import render, redirect
 from .forms import NewUserForm
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
-from django.contrib.auth.models import User
+
 
 
 # Implementation for viewing lists and items corresponding to that list
@@ -170,3 +170,7 @@ class User:
 
         return render(request=request, template_name="todo_app/login.html", context={"login_form": form})
 
+    def logout_request(request):
+        logout(request)
+        messages.info(request, "You have successfully logged out.")
+        return redirect("login")

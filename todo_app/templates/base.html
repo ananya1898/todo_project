@@ -16,6 +16,27 @@
 }</style>
 
 <body>
+<!--Navbar-->
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" align="right">
+  <!--<a class="navbar-brand" href="#">Navbar</a>-->
+  <!--< class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="False" aria-label="Toggle navigation">-->
+    <!--<span class="navbar-toggler-icon"></span>-->
+  <!--</button>-->
+  <div class="collapse navbar-collapse" id="navbarText" >
+        <div class="float-right" >
+    <!--<ul class="navbar-nav mr-auto">-->
+      {% if user.is_authenticated %}
+
+      <li class="nav-item">
+        <a class="nav-link" href="/logout">Welcome, {{user.username}}!! Click here to logout</a>
+      </li>
+        {% endif %}
+
+  </div>
+  </div>
+</nav>
+
     <div>
         <h1 onclick="location.href='{% url "index" %}'">
             Django To-do Lists
