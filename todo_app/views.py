@@ -10,13 +10,21 @@ from .forms import NewUserForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
-
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
 
 # Implementation for viewing lists and items corresponding to that list
+
+
 class ListListView(ListView):
     model = ToDoList
     template_name = "todo_app/index.html"
+
+    # To ensure secure access
+    @method_decorator(login_required(login_url="login"))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
 
     def get_queryset(self):
         return ToDoList.objects.filter(username=self.request.user)
@@ -25,6 +33,11 @@ class ListListView(ListView):
 class ItemListView(ListView):
     model = ToDoItem
     template_name = "todo_app/todo_list.html"
+
+    # To ensure secure access
+    @method_decorator(login_required(login_url="login"))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
 
     def get_queryset(self):
         return ToDoItem.objects.filter(todo_list_id=self.kwargs["list_id"])
@@ -42,20 +55,32 @@ class ListCreate(CreateView):
     model = ToDoList
     fields = ["title"]
 
+    # To ensure secure access
+    @method_decorator(login_required(login_url="login"))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
     def get_context_data(self):
         context = super(ListCreate, self).get_context_data()
         context["title"] = "Add a new list"
         context["username"] = self.request.user
         return context
+
     def form_valid(self, form):
         form.instance.username = self.request.user
         return super().form_valid(form)
+
 
 # Creating a new item in the list
 
 class ItemCreate(CreateView):
     model = ToDoItem
     fields = ["todo_list", "title", "description", "due_date"]
+
+    # To ensure secure access
+    @method_decorator(login_required(login_url="login"))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
 
     def get_initial(self):
         initial_data = super(ItemCreate, self).get_initial()
@@ -84,6 +109,11 @@ class ItemUpdate(UpdateView):
         "is_completed"
     ]
 
+    # To ensure secure access
+    @method_decorator(login_required(login_url="login"))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
     def get_context_data(self):
         context = super(ItemUpdate, self).get_context_data()
         context["todo_list"] = self.object.todo_list
@@ -102,6 +132,11 @@ class ListDelete(DeleteView):
     # You have to use reverse_lazy() instead of reverse(),
     # as the urls are not loaded when the file is imported.
     success_url = reverse_lazy("index")
+
+    # To ensure secure access
+    @method_decorator(login_required(login_url="login"))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
 
 
 class ItemDelete(DeleteView):
